@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="f()">fetch</button>
+  <div></div>
+  <script>
+    const obj = {"task_input":"大数据","crew_json":{"name":"ArticleCreationAndOptimization","type":"sequential","configs":{"agents":["\narticle_creation_agent:\n  role: >\n    短篇文章创作专家，专注于根据给定的主题或关键词生成高质量的简短文章\n  goal: >\n    根据提供的主题或关键词创作一篇内容丰富、结构清晰、语言流畅的简短文章\n    文章应包含引人入胜的开头、详细的内容展开和有力的结尾\n    确保文章的语言风格与输入文本的语言风格一致\n  backstory: >\n    你是一位经验丰富的文章创作者，拥有多年为各种媒体平台撰写短篇文章的经验\n    你擅长快速理解主题并提炼出关键点，能够用简洁明了的语言表达复杂的思想\n    你总是注重文章的逻辑性和可读性，确保读者能够轻松理解并感兴趣\n    你非常重视语言的一致性，输出文本的语言要从输入中推断出来\n    如果输入中没有明确要求输出文本的语言，那么输出文本的语言一定要和输入文本的语言一致\n    不能出现输入语言和输出语言不一致的情况\n","\narticle_optimization_agent:\n  role: >\n    文章优化专家，专注于提升文章的流畅性和可读性\n  goal: >\n    对生成的文章进行润色和结构上的优化，\n    使其更加流畅易读，提高读者的阅读体验\n  backstory: >\n    你是一位拥有多年编辑经验的文章优化专家，\n    曾在多家知名媒体和出版机构工作。\n    你擅长通过调整句子结构、优化段落布局和\n    选择更合适的词汇来提升文章的整体质量。\n    你相信好的文章不仅内容丰富，而且语言流畅，\n    能够吸引并保持读者的注意力。\n    输出文本的语言要从输入中推断出来，\n    如果输入中没有要求输出文本的语言，\n    那么输出文本的语言一定要和输入文本的语言一致，\n    不能出现输入语言和输出语言不一致的情况\n"],"tasks":["\narticle_creation_task:\n  description: >\n    根据给定的主题或关键词生成一篇简短的文章。\n    请确保文章内容紧扣主题，逻辑清晰，语言流畅。\n    文章长度应在300到500字之间。\n    如果输入中包含特定的语言要求，请使用该语言进行写作。\n    如果没有明确的语言要求，请推断输入文本的语言，并使用相同的语言进行输出。\n  expected_output: >\n    一篇简短的文章，长度在300到500字之间。\n    输出文本的语言要从输入中推断出来，如果输入中没有要求输出文本的语言，那么输出文本的语言一定要和输入文本的语言一致，不能出现输入语言和输出语言不一致的情况。\n  agent: article_creation_agent\n","\narticle_optimization_task:\n  description: >\n    对 generated 的文章进行润色和结构上的优化，\n    使其更加流畅易读。\n    请确保文章的逻辑清晰，段落之间过渡自然，\n    并且语言表达准确、简洁。\n  expected_output: >\n    一篇经过润色和结构优化的文章，\n    输出文本的语言要从输入中推断出来，\n    如果输入中没有要求输出文本的语言，\n    那么输出文本的语言一定要和输入文本的语言一致，\n    不能出现输入语言和输出语言不一致的情况。\n  agent: article_optimization_agent\n"]},"language":"zh","works":[{"name":"article_creation","description":"根据给定的主题或关键词生成一篇简短的文章"},{"name":"article_optimization","description":"对生成的文章进行润色和结构上的优化，使其更加流畅易读"}]}}
+    
+
+      
+    class FetchSSE {
+      constructor() {
+        this.controller = null
+      }
+
+      close() {
+        if (controller) {
+          controller.abort()
+          controller = null
+        }
+      }
+
+      fetchEventSource(url, options) {
+        this.controller = new AbortController()
+        options["signal"] = this.controller.signal
+        fetch(url, options)
+          .then(response => {
+            if (response.status === 200) {
+              options.onopen && options.onopen()
+              return response.body
+            }
+          })
+          .then(rb => {
+            const reader = rb.getReader()
+            const push = () => {
+              // done 为数据流是否接收完成，boolean
+              // value 为返回数据，Uint8Array
+              return reader.read().then(({done, value}) => {
+                if (done) {
+                  options.onclose && options.onclose()
+                  return
+                }
+                options.onmessage && options.onmessage(new TextDecoder().decode(value))
+                // 持续读取流信息
+                return push()
+              })
+            }
+            // 开始读取流信息
+            return push()
+          })
+          .catch((e) => {
+            options.error && options.error(e)
+          })
+      }
+
+    }
+
+    const fs = new FetchSSE()
+    function f(){
+      fs.fetchEventSource('http://10.100.100.37:8000/crew-json', {
+          method: 'POST',
+          body: JSON.stringify(obj),
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          onmessage: (msg) => {
+            msg.split("data:").forEach(js=>{
+              js = js.trim()
+              if(js != "") {
+                try {
+                  console.log(JSON.parse(js))                  
+                } catch (error) {
+                  console.log(js)
+                }
+              }
+            })
+          }
+        })
+    }
+    
+  </script>
+</body>
+</html>

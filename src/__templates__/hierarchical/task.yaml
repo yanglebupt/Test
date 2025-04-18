@@ -1,0 +1,10 @@
+manager_task:
+  description: >
+    User input: {user_input}
+
+    Analyze user input to determine how to better fulfill user requirements.
+    Calling all relevant agents that meet the user's requirements to better complete the user's request.
+    Context for the next agent and it's tools can be the output and combination of all previous agents.
+    You need to consider which ones can be used as context and pass it on to the next agent and it's tools.
+  expected_output: >
+    Result of final agent call
