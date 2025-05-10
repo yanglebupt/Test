@@ -2,7 +2,7 @@
   "name": "test-max",
   "author": "Max Team",
   "description": "Max 跨端应用工程",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scripts": {
     "start": "max-app start --config build.js --disableAsk",
     "build": "max-app build --config build.js",
