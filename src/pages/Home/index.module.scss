@@ -1,0 +1,36 @@
+html,
+body {
+  display: flex;
+}
+
+page,
+html,
+body {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 45rpx;
+  font-weight: bold;
+  margin: 20rpx 24rpx;
+}
+
+.info {
+  font-size: 36rpx;
+  margin: 8rpx 24rpx;
+  color: #555;
+}

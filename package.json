@@ -1,0 +1,67 @@
+{
+  "name": "test-max",
+  "author": "Max Team",
+  "description": "Max 跨端应用工程",
+  "version": "0.3.0",
+  "scripts": {
+    "start": "max-app start --config build.js --disableAsk",
+    "build": "max-app build --config build.js",
+    "start:mrn": "export MAX_TARGET_ENV=mrn && max-app start --config build.js --disableAsk",
+    "start:web": "export MAX_TARGET_ENV=web && max-app start --config build.js --disableAsk",
+    "start:wx": "export MAX_TARGET_ENV=wechat-miniprogram && max-app start --config build.js --disableAsk",
+    "clean": "max-app cache --clean",
+    "eslint": "eslint --ext .js,.jsx,.tsx,.ts ./",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\" --formatter unix",
+    "prettier": "prettier **/* --write",
+    "lint": "yarn eslint && yarn stylelint",
+    "fix": "yarn eslint --fix",
+    "migrate:pnpm": "NPM_CONFIG_REGISTRY=http://r.npm.sankuai.com/ npx @max/max-cli@latest migrate -t pnpm",
+    "test": "echo 'test'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@git.sankuai.com/hfe/max-miniapp-ts.git"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9",
+    "@types/react": "17.0.30",
+    "react-redux": "7.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "jsx-ast-utils": "^3.0.0",
+    "react-native": "0.63.5",
+    "@mrn/react-native": "^3.0.40"
+  },
+  "dependencies": {
+    "@hfe/max-image": "^4.1.0",
+    "@hfe/max-text": "^4.1.0",
+    "@hfe/max-view": "^4.1.0",
+    "@max/leez-dependencies": "^2.5.17 ",
+    "@max/max": "^1.0.4",
+    "@max/meituan-uni-network": "^2.0.0"
+  },
+  "devDependencies": {
+    "@hfe/max-types": "^0.0.4",
+    "@max/build-miniapp-dependencies": "^2.0.3",
+    "@max/build-mrn-dependencies": "^1.1.0",
+    "@max/build-plugin-miniapp-publish": "^1.0.0",
+    "@max/build-web-dependencies": "^2.0.0",
+    "@max/eslint-plugin-max-compile-time-miniapp": "^1.0.22",
+    "@max/kit-lib-build-config-helper": "^1.0.7",
+    "@max/max-app": "^2.0.1",
+    "@max/max-miniapp-build-error-helper-plugin": "^1.0.3",
+    "@max/max-spec": "^1.0.2",
+    "conventional-changelog-cli": "4.1.0",
+    "eslint": "^6.8.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.2"
+  },
+  "engines": {
+    "pnpm": "<8",
+    "node": ">=14 <17"
+  },
+  "license": "UNLICENSED",
+  "gitHead": "e081ea75d3661eadc069dd8acb0ace9a7b08551f",
+  "private": true,
+  "originTemplate": "@max/max-app-template"
+}
