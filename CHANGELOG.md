@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://git.sankuai.com/hfe/max-miniapp-ts/compare/v0.5.0...v0.6.0) (2025-05-10)
+
+
+### Features
+
+* update lock ([b4ef09b](https://git.sankuai.com/hfe/max-miniapp-ts/commit/b4ef09b13457645e288b3fc9047752b08961e040))
+
 ## [0.5.0](https://git.sankuai.com/hfe/max-miniapp-ts/compare/v0.4.0...v0.5.0) (2025-05-10)
 
 ## [0.4.0](https://git.sankuai.com/hfe/max-miniapp-ts/compare/v0.0.2...v0.4.0) (2025-05-10)
